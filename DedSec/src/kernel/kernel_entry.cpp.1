@@ -1,0 +1,36 @@
+typedef unsigned short uint16;
+
+void putchar(char ch);
+void print_string(const char* str);
+
+// 内核入口点
+extern "C" void kernel_main()
+{
+    // 在屏幕上打印一条消息
+    print_string("Hello, world!\n");
+
+    // 无限循环，以防止内核退出
+    while (true) {}
+}
+
+// 打印字符串的函数
+void print_string(const char* str)
+{
+    // 将字符串逐字符输出到屏幕
+    while (*str)
+    {
+        putchar(*str);
+        str++;
+    }
+}
+
+// 将字符输出到屏幕的函数
+void putchar(char ch)
+{
+    // 将字符转换为屏幕上的字符和颜色
+    uint16 character = ch | (0x0f << 8);
+
+    // 将字符输出到屏幕
+    volatile uint16* video_memory = (uint16*)0xb8000;
+    *video_memory = character;
+}

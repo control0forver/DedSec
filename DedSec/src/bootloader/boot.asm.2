@@ -1,0 +1,37 @@
+; 引导程序代码
+bits 16
+org 0x7c00     ; 确保程序位于引导扇区的0x7c00处
+jmp start
+
+; 加载内核
+start:
+    xor ax, ax   ; 清空寄存器
+    mov ds, ax   ; 设置段寄存器
+    mov ss, ax   ; 设置堆栈段寄存器
+    mov sp, 0x7c00  ; 设置堆栈指针
+    mov si, msg  ; 设置消息的指针
+    call print_string  ; 调用打印字符串的函数
+    mov bx, 0x1000  ; 设置内核加载地址
+    mov dh, 1   ; 设置磁头号
+    mov dl, 0   ; 设置驱动器号
+    mov cx, 1   ; 设置扇区数
+    mov ax, 0x0200  ; 读取磁盘扇区的BIOS中断号
+    int 0x13    ; 调用BIOS中断
+    jmp 0x1000:0  ; 跳转到内核入口点
+
+; 打印字符串的函数
+print_string:
+    lodsb   ; 读取一个字符
+    or al, al  ; 检查是否结束
+    jz done  ; 如果是，则返回
+    mov ah, 0x0e  ; 设置打印函数的BIOS中断号
+    int 0x10  ; 调用BIOS中断
+    jmp print_string ; 继续打印字符串
+done:
+    ret
+
+msg:
+    db 'Loading kernel...', 0
+
+times 510-($-$$) db 0
+dw 0xaa55  ; 引导扇区的标志
