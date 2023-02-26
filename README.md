@@ -1,2 +1,2 @@
 # DedSec
-Operation System
+Operation System x86
