@@ -47,6 +47,7 @@ checkPkg gcc
 checkPkg g++
 checkPkg i686-linux-gnu-gcc
 checkPkg grub-mkrescue
+checkPkg xorriso
 echo 'OK'
 
 
