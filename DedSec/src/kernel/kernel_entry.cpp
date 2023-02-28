@@ -101,7 +101,7 @@ extern "C"{
 void _kernel_main()
 {
 terminal_initialize();
-terminal_writestring("wellcome to my first operating system!");
+terminal_writestring("DedSec");
 for(;;);
 }
 }

@@ -20,6 +20,9 @@ echo 'start making image'
 # making
 grub-mkrescue $1'/obj/grub_boot/iso' --output=$1'/obj/grub_boot/system.iso'
 echo 'OK'
+echo 'moving image from obj'
+mv $1'/obj/grub_boot/system.iso' $1'/image/'
+echo 'OK'
 
 #dd if=$1'/obj/boot.o' of=$1'/image/system.img' bs=512 count=1 conv=notrunc
 #dd if=$1'/obj/kernel.o' of=$1'/image/system.img' bs=512 seek=1 conv=notrunc

@@ -46,8 +46,10 @@ checkPkg nasm
 checkPkg gcc
 checkPkg g++
 checkPkg i686-linux-gnu-gcc
+checkPkg i686-linux-gnu-g++
 checkPkg grub-mkrescue
 checkPkg xorriso
+checkPkg mtools
 echo 'OK'
 
 
