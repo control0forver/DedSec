@@ -1,6 +1,8 @@
 #include <stddef.h> //we can use it: it doesnt use any platform-related api functions
 #include <stdint.h> //include it to get int16_t and some integer types
 
+#include "x86/io/io.h"
+
 /* Hardware text mode color constants. */
 enum vga_color
 {
@@ -97,11 +99,39 @@ void terminal_writestring(const char* data)
 		terminal_putchar(data[i]);
 }
 
+unsigned char keyboard_map[128] = {
+    0, 27, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b', '\t',
+    'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n', 0, 'a', 's',
+    'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '`', 0, '\\', 'z', 'x', 'c', 'v',
+    'b', 'n', 'm', ',', '.', '/', 0, '*', 0, ' ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, '7', '8', '9', '-', '4', '5', '6', '+', '1', '2', '3', '0',
+    '.'};
+
+void isr_keyboard() {
+  unsigned char scancode = inb(0x60);
+  if (scancode & 0x80) {
+    // key rel
+  } else {
+    unsigned char ch = keyboard_map[scancode];
+    if (ch != 0) {
+      // key pushed
+      char str[2] = {(char)ch, '\0'};
+      terminal_writestring(str);
+    }
+  }
+}
+
 extern "C"{
+
 void _kernel_main()
 {
-terminal_initialize();
-terminal_writestring("DedSec");
-for(;;);
+    terminal_initialize();
+    terminal_writestring("DedSec");
+    terminal_writestring("now on kernel_main");
+    
+    for (;;){
+        isr_keyboard();
+    }
 }
+
 }
