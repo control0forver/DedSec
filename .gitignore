@@ -32,3 +32,4 @@
 *.app
 
 DedSec/out
+.vs
