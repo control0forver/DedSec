@@ -143,4 +143,4 @@ public:
 
 	}
 
-};
+} terminal;
