@@ -27,7 +27,7 @@ uint8_t get_key() {
 }
 
 void new_line() {
-	terminal.gotoxy(0, terminal.terminal_row + 1);
+	terminal.gotoxy(0, terminal.get_termianl_row() + 1);
 }
 
 
