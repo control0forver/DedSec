@@ -91,6 +91,7 @@ extern "C" {
 			case 2:
 			{
 				// echo key
+				terminal::clear();
 				terminal::putchar(keyboard_map[scancode]);
 
 				break;
