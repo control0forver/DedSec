@@ -92,8 +92,8 @@ namespace terminal{
 	void print(const char* data)
 	{
 		size_t datalen = strlen(data);
-		for (size_t i = 0; i < datalen; i++)
-			putchar(data[i]);
+		for (; *data; data++)
+			putchar(*data);
 	}
 
 	void gotoxy(size_t x, size_t y) {
