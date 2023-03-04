@@ -2,9 +2,7 @@
 
 #include <pch/pch.h>
 
-
-static class terminal {
-public:
+namespace terminal{
 	/* Hardware text mode color constants. */
 	enum vga_color
 	{
@@ -26,7 +24,6 @@ public:
 		COLOR_WHITE = 15,
 	};
 
-private:
 
 	uint8_t make_color(enum vga_color fg, enum vga_color bg)
 	{
@@ -48,19 +45,16 @@ private:
 		return ret;
 	}
 
-public:
 
 	static const size_t VGA_WIDTH = 80;
 	static const size_t VGA_HEIGHT = 24;
 
-private:
 	size_t terminal_row;
 	size_t terminal_column;
 	uint8_t terminal_color;
 	uint16_t* terminal_buffer;
 
-// public get, private set data
-public:
+
 	size_t get_termianl_row() {
 		return terminal_row;
 	}
@@ -71,7 +65,6 @@ public:
 		return terminal_color;
 	}
 
-public:
 	void setcolor(uint8_t color)
 	{
 		terminal_color = color;
@@ -134,13 +127,4 @@ public:
 		clear();
 	}
 
-
-	terminal() {
-
-	}
-
-	~terminal() {
-
-	}
-
-} terminal;
+}

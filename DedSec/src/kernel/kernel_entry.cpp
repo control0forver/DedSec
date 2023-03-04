@@ -27,7 +27,7 @@ uint8_t get_key() {
 }
 
 void new_line() {
-	terminal.gotoxy(0, terminal.get_termianl_row() + 1);
+	terminal::gotoxy(0, terminal::get_termianl_row() + 1);
 }
 
 
@@ -35,15 +35,15 @@ extern "C" {
 
 	void _kernel_main()
 	{
-		terminal.initialize();
-		terminal.print("DedSec");
+		terminal::initialize();
+		terminal::print("DedSec");
 		new_line();
-		terminal.print("now on kernel_main");
+		terminal::print("now on kernel_main");
 
 		get_key();
 
 
-		terminal.clear();
+		terminal::clear();
 
 		// keyboard io looping
 		for (;;) {
@@ -83,15 +83,15 @@ extern "C" {
 
 			case 1:
 			{
-				terminal.clear();
-				terminal.print("Key Released");
+				terminal::clear();
+				terminal::print("Key Released");
 				break;
 			}
 
 			case 2:
 			{
 				// echo key
-				terminal.putchar(keyboard_map[scancode]);
+				terminal::putchar(keyboard_map[scancode]);
 
 				break;
 			}
