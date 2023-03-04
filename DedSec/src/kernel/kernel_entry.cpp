@@ -83,7 +83,7 @@ extern "C" {
 
 			case 1:
 			{
-				terminal::clear();
+				terminal::gotoxy(0, 0);
 				terminal::print("Key Released");
 				break;
 			}
@@ -91,7 +91,7 @@ extern "C" {
 			case 2:
 			{
 				// echo key
-				terminal::clear();
+				terminal::gotoxy(0,0);
 				terminal::putchar(keyboard_map[scancode]);
 
 				break;
