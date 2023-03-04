@@ -2,7 +2,7 @@
 
 #include <pch/pch.h>
 
-namespace terminal{
+namespace terminal {
 	/* Hardware text mode color constants. */
 	enum vga_color
 	{
@@ -65,19 +65,16 @@ namespace terminal{
 		return terminal_color;
 	}
 
-	void setcolor(uint8_t color)
-	{
+	void setcolor(uint8_t color) {
 		terminal_color = color;
 	}
 
-	void putentryat(char c, uint8_t color, size_t x, size_t y)
-	{
+	void putentryat(char c, uint8_t color, size_t x, size_t y) {
 		const size_t index = y * VGA_WIDTH + x;
 		terminal_buffer[index] = make_vgaentry(c, color);
 	}
 
-	void putchar(char c)
-	{
+	void putchar(char c) {
 		putentryat(c, terminal_color, terminal_column, terminal_row);
 		if (++terminal_column == VGA_WIDTH)
 		{
@@ -89,11 +86,19 @@ namespace terminal{
 		}
 	}
 
-	void print(const char* data)
-	{
-		size_t datalen = strlen(data);
+	// fast print
+	/*
+	void _print(const char* data) {
 		for (; *data; data++)
 			putchar(*data);
+	}
+	*/
+
+	// safe print
+	void print(const char* data) {
+		size_t datalen = strlen(data);
+		for (size_t i = 0; i < datalen; i++)
+			putchar(data[i]);
 	}
 
 	void gotoxy(size_t x, size_t y) {
@@ -106,7 +111,8 @@ namespace terminal{
 		terminal_column += y;
 	}
 
-	void clear() {
+	// clear screen only
+	void _clear() {
 		for (size_t y = 0; y < VGA_HEIGHT; y++)
 		{
 			for (size_t x = 0; x < VGA_WIDTH; x++)
@@ -115,6 +121,10 @@ namespace terminal{
 				terminal_buffer[index] = make_vgaentry(' ', terminal_color);
 			}
 		}
+	}
+
+	void clear() {
+		_clear();
 		gotoxy(0, 0);
 	}
 
